@@ -31,9 +31,6 @@ class selinux (
     mode   => '0755',
   }
 
-  class { 'selinux::config':
-    mode => $mode,
-    type => $type,
-  }
+  include selinux::config
 
 }
