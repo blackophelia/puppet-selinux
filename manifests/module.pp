@@ -65,14 +65,14 @@ define selinux::module(
     /^puppet:\/\/\/modules\/.*.te$/: {
       fail('Invalid source parameter, expecting a directory')
     }
-    /^puppet:\/\/\/modules\/[^\/]+\/[^\/]+\/?$/: { }
+    /^puppet:\/\/\/modules\/[^\/]+(\/[^\/]+)*\/?$/: { }
     /^file:\/\/\/.*$/: { }
     default: {
-      fail('Invalid source parameter')
+      fail('Invalid source parameter - ${sourcedir}')
     }
   }
   if $sourcedir !~ /^((puppet|file):.*\/([^\/]*))/ {
-    fail('Invalid source parameter')
+    fail('Invalid source parameter. Expected URL to start with puppet:/// or file:///')
   }
 
   # Set Resource Defaults
