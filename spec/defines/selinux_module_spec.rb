@@ -150,7 +150,9 @@ describe 'selinux::module', :type => :define do
     'puppet:///modules/selinux/httpd_rotatelogs/httpd_rotatelogs.te',
     'puppet:///modules/selinux/httpd_rotatelogs',
     'puppet:///modules/selinux/rsynclocal',
-    'puppet:///modules/selinux/rsynclocal/'
+    'puppet:///modules/selinux/rsynclocal/',
+    'puppet:///modules/selinux/with/a/very/nested/module',
+    'puppet:///modules/selinux/with/a/very/nested/module/'
   ].each do | source |
     describe "source parameter check #{source}" do
       modname = 'rsynclocal'
