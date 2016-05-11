@@ -46,7 +46,8 @@ define selinux::module(
       ensure parameter should be one of ${ensure_string}")
   }
 
-  $selinux_modules_dir = $modules_dir == undef ? {
+  notify {"modules_dir = ${modules_dir}": }
+  $selinux_modules_dir = ($modules_dir == undef) ? {
     false => $modules_dir,
     true  => $selinux::modules_dir,
   }
