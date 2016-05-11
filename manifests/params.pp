@@ -9,8 +9,9 @@
 # }
 #
 class selinux::params (
-  $modules_dir = "${::settings::vardir}/selinux"
-  ) {
+  $modules_dir = '/usr/share/selinux',
+) {
+
   case $::osfamily {
     'RedHat': {
       if $::operatingsystemrelease < '7' {
@@ -23,4 +24,5 @@ class selinux::params (
         fail('Unsupported OS')
     }
   }
+
 }
