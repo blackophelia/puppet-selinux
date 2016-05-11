@@ -1,0 +1,9 @@
+--with-filename
+--no-80chars-check
+--no-documentation-check
+--no-class_inherits_from_params_class-check
+--no-only_variable_string-check
+
+# this should be re-added once the bug in the linter is fixed, in puppet-lint > 1.1.0
+# Bug doesn't detect loop iterators as local vars https://github.com/rodjek/puppet-lint/issues/450
+--no-variable_scope-check

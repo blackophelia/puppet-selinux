@@ -18,20 +18,22 @@
 #
 #  include selinux
 #
-class selinux(
-  $mode         = 'enforcing',
-  $installmake  = true,
-  ) {
-  include selinux::params
+class selinux (
+  $mode        = $selinux::params::ensure,
+  $type        = $selinux::params::type,
+  $installmake = $selinux::params::installmake,
+) inherits selinux::params {
 
   file { $selinux::params::modules_dir:
     ensure => directory,
     owner  => 'root',
     group  => 'root',
-    mode   => '0440',
+    mode   => '0755',
   }
 
   class { 'selinux::config':
-      mode => $mode,
+    mode => $mode,
+    type => $type,
   }
+
 }

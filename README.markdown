@@ -29,7 +29,7 @@ type, selmodule to load the module.
 
 # Installation
 <pre>
-puppet module install spiette/selinux
+puppet module install blackophelia/selinux
 </pre>
 
 # Synopsys
@@ -40,7 +40,8 @@ include selinux
 
 <pre>
 class { 'selinux':
-  mode => 'permissive'
+  mode => 'permissive',
+  type => 'targeted',
 }
 </pre>
 ### Parameters:
@@ -48,7 +49,12 @@ class { 'selinux':
 - *mode*
 
    (enforcing|permissive|disabled)
-   sets the operating state for SELinux.
+   sets the operating state for SELinux. Defaults to `enforcing`.
+
+- *type*
+
+   (targeted|minimum|mls)
+   sets the operating state for SELinux. Defaults to `targeted`.
 
 - *installmake*
 
@@ -130,10 +136,12 @@ Many SELinux commands are slow to execute, especially on changes. Your puppet ru
 
 # Contribute
 
-Please see the [Github](https://github.com/spiette/puppet-selinux) page. We'll review  pull requests and bug reports. If the module don't do what you want, please explain your use case. Please submit your pull requests in the pullrequest branch and make sure tests are running.
+Please see the [Github](https://github.com/blackophelia/puppet-selinux) page. We'll review pull requests and bug reports. If the module don't do what you want, please explain your use case.
+Please submit your pull requests in the pullrequest branch and make sure tests are running.
 
 # Credits
-- Maintainer: Simon Piette <piette.simon@gmail.com>
+- Maintainer Josie GD <josie.g.dean@gmail.com>
+- This module forked from Simon Piette <piette.simon@gmail.com> https://github.com/spiette/puppet-selinux
 - Original module from James Fryman <james@frymanet.com> https://github.com/jfryman/puppet-selinux
-- Concepts incorporated from:
-http://stuckinadoloop.wordpress.com/2011/06/15/puppet-managed-deployment-of-selinux-modules/
+- Concepts incorporated from: http://stuckinadoloop.wordpress.com/2011/06/15/puppet-managed-deployment-of-selinux-modules/
+

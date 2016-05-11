@@ -3,8 +3,7 @@
 #  This class is designed to configure the system to use SELinux on the system
 #
 # === Parameters:
-#  [*mode*]
-#   (enforcing|permissive|disabled) - sets the operating state for SELinux.
+#  This class provides no parameters.
 #
 # === Actions:
 #  Configures SELinux to a specific state (enforcing|permissive|disabled)
@@ -15,9 +14,11 @@
 # === Sample Usage:
 #  This module should not be called directly.
 #
-class selinux::config(
-  $mode
-) {
+class selinux::config {
+
+  $mode = $selinux::mode
+  $type = $selinux::type
+
   Exec {
     path => '/bin:/sbin:/usr/bin:/usr/sbin',
   }
@@ -30,7 +31,7 @@ class selinux::config(
     ensure  => present,
     owner   => 'root',
     group   => 'root',
-    mode    => '0444',
+    mode    => '0644',
     content => template('selinux/sysconfig_selinux.erb')
   }
 

@@ -35,6 +35,7 @@ define selinux::module(
   $modules_dir = undef,
   $ignore = undef,
 ) {
+
   include selinux
   include selinux::install
 
@@ -45,34 +46,31 @@ define selinux::module(
       ensure parameter should be one of ${ensure_string}")
   }
 
-  if $modules_dir {
-    $selinux_modules_dir = $modules_dir
-  } else {
-    $selinux_modules_dir = $selinux::params::modules_dir
+  $selinux_modules_dir = $modules_dir ? {
+    true  => $modules_dir,
+    false => $selinux::modules_dir,
   }
+
   # .te and .fc files will be placed on a $name directory
   $this_module_dir = "${selinux_modules_dir}/${name}"
 
-  if $source {
-    $sourcedir = $source
-  } else {
-    $sourcedir = "puppet:///modules/selinux/${name}"
+  $sourcedir = $source ? {
+    true  => $source,
+    false => "puppet:///modules/selinux/${name}"
   }
+
   # sourcedir validation
-  # we only accept puppet:///modules/<something>/<something>, file:///anything
+  # we only accept puppet:///modules(/<something>)*, file:///anything
   # we reject .te
   case $sourcedir {
     /^puppet:\/\/\/modules\/.*.te$/: {
       fail('Invalid source parameter, expecting a directory')
     }
-    /^puppet:\/\/\/modules\/[^\/]+(\/[^\/]+)*\/?$/: { }
+    /^puppet:\/\/\/modules(\/[^\/]+)*\/?$/: { }
     /^file:\/\/\/.*$/: { }
     default: {
-      fail('Invalid source parameter - ${sourcedir}')
+      fail("Invalid source parameter - ${sourcedir}")
     }
-  }
-  if $sourcedir !~ /^((puppet|file):.*\/([^\/]*))/ {
-    fail('Invalid source parameter. Expected URL to start with puppet:/// or file:///')
   }
 
   # Set Resource Defaults
@@ -84,13 +82,14 @@ define selinux::module(
 
   # Only allow refresh in the event that the initial source files are updated.
   Exec {
-    path        => '/sbin:/usr/sbin:/bin:/usr/bin',
-    cwd         => $this_module_dir,
+    path => '/sbin:/usr/sbin:/bin:/usr/bin',
+    cwd  => $this_module_dir,
   }
 
   $active_modules = '/etc/selinux/targeted/modules/active/modules'
   $active_pp = "${active_modules}/${name}.pp"
   $compiled_pp = "${this_module_dir}/${name}.pp"
+
   case $ensure {
     present: {
       File[$this_module_dir]->
@@ -141,7 +140,7 @@ define selinux::module(
     }
     absent: {
       selmodule { $name:
-        ensure => $ensure,
+        ensure => absent,
       }
       file { $this_module_dir:
         ensure => absent,

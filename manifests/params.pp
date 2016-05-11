@@ -8,9 +8,12 @@
 #   ensure => present,
 # }
 #
-class selinux::params (
-  $modules_dir = '/usr/share/selinux',
-) {
+class selinux::params {
+
+  $modules_dir = '/usr/share/selinux'
+  $mode  = 'enforcing'
+  $type = 'targeted'
+  $installmake  = true
 
   case $::osfamily {
     'RedHat': {
