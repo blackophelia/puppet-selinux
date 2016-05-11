@@ -140,7 +140,7 @@ Please see the [Github](https://github.com/blackophelia/puppet-selinux) page. We
 Please submit your pull requests in the pullrequest branch and make sure tests are running.
 
 # Credits
-- Maintainer Josie GD <josie.g.dean@gmail.com>
+- Maintainer Josie GD 
 - This module forked from Simon Piette <piette.simon@gmail.com> https://github.com/spiette/puppet-selinux
 - Original module from James Fryman <james@frymanet.com> https://github.com/jfryman/puppet-selinux
 - Concepts incorporated from: http://stuckinadoloop.wordpress.com/2011/06/15/puppet-managed-deployment-of-selinux-modules/
