@@ -46,17 +46,17 @@ define selinux::module(
       ensure parameter should be one of ${ensure_string}")
   }
 
-  $selinux_modules_dir = $modules_dir ? {
-    true  => $modules_dir,
-    false => $selinux::modules_dir,
+  $selinux_modules_dir = $modules_dir == undef ? {
+    false => $modules_dir,
+    true  => $selinux::modules_dir,
   }
 
   # .te and .fc files will be placed on a $name directory
   $this_module_dir = "${selinux_modules_dir}/${name}"
 
-  $sourcedir = $source ? {
-    true  => $source,
-    false => "puppet:///modules/selinux/${name}"
+  $sourcedir = $source == undef ? {
+    false => $source,
+    true  => "puppet:///modules/selinux/${name}"
   }
 
   # sourcedir validation
