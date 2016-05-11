@@ -29,7 +29,7 @@
 #      source => 'puppet:///modules/selinux/rsynclocal',
 #    }
 #
-define selinux::module(
+define selinux::module (
   $ensure  = 'present',
   $source = undef,
   $modules_dir = undef,
@@ -46,10 +46,10 @@ define selinux::module(
       ensure parameter should be one of ${ensure_string}")
   }
 
-  notify {"modules_dir = ${modules_dir}": }
-  $selinux_modules_dir = ($modules_dir == undef) ? {
-    false => $modules_dir,
-    true  => $selinux::modules_dir,
+  if $modules_dir {
+    $selinux_modules_dir = $modules_dir
+  } else {
+    $selinux_modules_dir = $selinux::modules_dir
   }
 
   # .te and .fc files will be placed on a $name directory
