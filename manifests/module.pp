@@ -55,9 +55,10 @@ define selinux::module (
   # .te and .fc files will be placed on a $name directory
   $this_module_dir = "${selinux_modules_dir}/${name}"
 
-  $sourcedir = $source == undef ? {
-    false => $source,
-    true  => "puppet:///modules/selinux/${name}"
+  if $source {
+    $sourcedir = $source
+  } else {
+    $sourcedir = "puppet:///modules/selinux/${name}"
   }
 
   # sourcedir validation
