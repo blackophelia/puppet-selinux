@@ -4,6 +4,7 @@ env:
   - PUPPET_VERSION=3.7.2
   - PUPPET_VERSION=4.3.1
   - PUPPET_VERSION=4.5.0
+script: bundle exec rake spec
 notifications:
   email: false
 sudo: false
