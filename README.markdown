@@ -143,4 +143,3 @@ Please submit your pull requests in the pullrequest branch and make sure tests a
 - Original module from James Fryman <james@frymanet.com> https://github.com/jfryman/puppet-selinux
 - Concepts incorporated from: http://stuckinadoloop.wordpress.com/2011/06/15/puppet-managed-deployment-of-selinux-modules/
 
-`
